@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+# -------------------------------------------------------------------------
+# Bootstrap script to setup the system from scratch
+# Author: Luca <vipex@vipexsoft.com>
+# Version: 0.1
+# -------------------------------------------------------------------------
+
+log_i() { echo -e "\033[0;34mℹ️ $1\033[0m"; } # Blue
+log_o() { echo -e "\033[0;32m✅ $1\033[0m"; } # Green
+log_w() { echo -e "\033[0;33m⚠️ $1\033[0m"; } # Yellow
+log_e() { echo -e "\033[0;31m❌ $1\033[0m"; } # Red
+OS=$(uname -s)
+
+# Get the OS type
+case "${OS}" in
+Darwin)
+  source macos/bootstrap
+  ;;
+Linux)
+  source linux/bootstrap
+  ;;
+*)
+  log_e "Unsupported operating system $(uname -s)."
+  exit 1
+  ;;
+esac
+
+# Uses stow to manage dotfiles
+if ! command -v stow &> /dev/null; then
+  echo "stow could not be found, please install it first."
+  exit 1
+fi
+
+# Stow dotfiles
+DOTFILES_DIR=${DOTFILES_DIR:-"./home"}

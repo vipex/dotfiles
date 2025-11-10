@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+log_x "Linux setup is not yet implemented."
+exit 1

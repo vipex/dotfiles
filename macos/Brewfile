@@ -1,0 +1,83 @@
+# Homebrew Brewfile for macOS setup
+
+## TAPS
+
+#> No additional taps for now.
+
+# FORMULÆ
+
+#> Generic
+brew "htop"
+brew "btop"
+brew "git"
+brew "telnet"
+
+#> Security
+brew "1password-cli"
+
+#> AWS Tools
+brew "awscli"
+brew "cfn-lint"
+
+
+## CASKS
+
+#> System Utilities
+cask "logi-options+"
+
+#> AWS cli plugin for Session Manager
+cask "session-manager-plugin"
+
+#> Fonts
+cask "font-fira-code"
+cask "font-hack-nerd-font"
+
+#> Browsers
+cask "google-chrome@dev"
+cask "firefox"
+cask "brave-browser"
+
+#> Utilities
+cask "appcleaner"
+cask "betterzip"
+cask "beyond-compare"
+cask "devtoys"
+cask "ghostty"
+cask "keepassxc"
+cask "keka"
+cask "numi"
+cask "obsidian"
+cask "raycast"
+cask "stats"
+
+#> Security
+cask "knockknock"
+cask "netiquette"
+cask "openvpn-connect"
+cask "processspy"
+cask "suspicious-package"
+cask "taskexplorer"
+
+#> Development
+cask "dbeaver-community"
+cask "mysqlworkbench"
+cask "mysql-shell"
+cask "docker-desktop"
+cask "drawio"
+cask "phpstorm"
+cask "postman"
+cask "redis-insight"
+cask "sublime-text"
+cask "visual-studio-code"
+
+#> Workspace
+cask "leapp"
+cask "slack"
+cask "google-drive"
+
+#> Utils
+cask "signal"
+cask "whatsapp"
+cask "spotify"
+cask "teamviewer"
+cask "windows-app"

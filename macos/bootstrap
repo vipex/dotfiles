@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+# -------------------------------------------------------------------------
+# Bootstrap script to setup MacOS
+# Author: Luca <vipex@vipexsoft.com>
+# Version: 0.1
+# -------------------------------------------------------------------------
+
+# macOS specific setup
+log_i "Setting up for macOS..."
+
+## Xcode Command Line Tools
+if ! xcode-select -p &>/dev/null; then
+  log_i "Installing Xcode Command Line Tools..."
+  xcode-select --install
+  # Pause the script until the user finishes the installation
+  log_w "Please install the Xcode Command Line Tools from the pop-up window and then press Enter to continue."
+  read -r
+else
+  log_o "Xcode Command Line Tools already installed."
+fi
+
+## Homebrew
+if ! command -v brew &>/dev/null; then
+  log_i "Installing Homebrew..."
+  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  log_o "Homebrew installed."
+else
+  log_o "Homebrew already installed."
+fi
+
+### Install dependencies via Homebrew
+BREWFILE=${BREWFILE:-"./macos/Brewfile"}
+if [ -f "${BREWFILE}" ]; then
+  log_i "Installing packages via Homebrew..."
+  brew bundle --file="${BREWFILE}"
+  log_o "...packages installation completed."
+else
+  log_w "Brewfile not found at ${BREWFILE}"
+fi
+
+## Mas-cli
+MASFILE=${MASFILE:-"./macos/Masfile"}
+if ! command -v mas &>/dev/null; then
+  log_w "mas-cli not installed, skipping App Store apps installation."
+else
+  if [ -f "${MASFILE}" ]; then
+    log_i "Installing Mac App Store apps via mas-cli..."
+    xargs mas install < "${MASFILE}"
+    log_o "...Mac App Store apps installation completed."
+  else
+    log_w "Masfile not found at ${MASFILE}"
+  fi
+fi
+
+## macOS specific configurations (defaults)
+
+## system configurations

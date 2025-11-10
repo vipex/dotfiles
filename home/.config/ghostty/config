@@ -1,0 +1,26 @@
+# ghostty 
+
+auto-update = download
+shell-integration-features = true
+
+font-family = "Hack Nerd Font Mono"
+font-size = 13
+background-opacity = 0.75
+background-blur-radius = 20
+theme = GitHub Dark Default
+
+window-decoration = true
+window-height = 40
+window-width = 180
+
+mouse-hide-while-typing = true
+
+macos-option-as-alt = true
+macos-icon = custom-style
+macos-icon-ghost-color = #30CB00
+macos-icon-screen-color = #999999
+
+# Quick terminal
+keybind = global:cmd+§=toggle_quick_terminal
+quick-terminal-size = 65%
+quick-terminal-screen = mouse
