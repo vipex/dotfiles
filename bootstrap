@@ -32,5 +32,5 @@ if ! command -v stow &> /dev/null; then
   exit 1
 fi
 
-# Stow dotfiles
-DOTFILES_DIR=${DOTFILES_DIR:-"./home"}
+
+#TODO: implement stow configuration

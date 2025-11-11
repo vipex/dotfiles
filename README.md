@@ -34,7 +34,7 @@ cd ~/.dotfiles && ./bootstrap
 ### Customizations
 
 Generic variables:
-- `DOTFILES_DIR` - Path to the dotfiles directory (default: `~/.dotfiles/home`).
+- `DOT_HOSTNAME` - Hostname to change it system-wide.
 
 MacOS specific variables:
 - `BREWFILE` - Path to the Brewfile for Homebrew [bundle](https://docs.brew.sh/Brew-Bundle-and-Brewfile) installations.
