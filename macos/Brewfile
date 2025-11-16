@@ -11,6 +11,7 @@ brew "htop"
 brew "btop"
 brew "git"
 brew "telnet"
+brew "rsync"
 
 #> Security
 brew "1password-cli"
