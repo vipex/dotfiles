@@ -36,7 +36,7 @@ if ! command -v stow &> /dev/null; then
   exit 1
 fi
 
-# implement stow configuration
+log_i "Setting up dotfiles with GNU Stow..."
 DOT_STOW_SOURCE=${DOT_STOW_SOURCE:-"${DOT_ROOT}/dots"}
 DOT_STOW_TARGET=${DOT_STOW_TARGET:-"${HOME}"}
 if [ -d "${DOT_STOW_SOURCE}" ]; then
@@ -45,6 +45,34 @@ if [ -d "${DOT_STOW_SOURCE}" ]; then
   log_o "Dotfiles configured."
 else
   log_e "Dotfiles directory not found at ${DOT_STOW_SOURCE}"
+  exit 1
+fi
+
+# Reload configurations
+if [ -f "${HOME}/.zshrc" ]; then
+  log_i "Reloading zsh configuration..."
+  source "${HOME}/.zshrc"
+  log_o "zsh configuration reloaded."
+else
+  log_w ".zshrc not found, skipping reload."
+fi
+
+# Install oh-my-zsh if not already installed
+if [ -z "${ZSH}" ] || [ ! -d "${ZSH}" ]; then
+  log_i "Installing Oh My Zsh..."
+  sh -c "$(curl -fsSL https://install.ohmyz.sh)" "" --unattended --keep-zshrc
+  log_o "Oh My Zsh installed."
+else
+  log_o "Oh My Zsh already installed."
+fi
+
+# Install starship prompt if not already installed
+if ! command -v starship &> /dev/null; then
+  log_i "Installing Starship prompt..."
+  curl -sS https://starship.rs/install.sh | sh
+  log_o "Starship prompt installed."
+else
+  log_o "Starship prompt already installed."
 fi
 
 log_i "Bootstrap process completed."

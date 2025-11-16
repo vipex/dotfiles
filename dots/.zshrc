@@ -23,8 +23,8 @@ zstyle ':omz:plugins:nvm' lazy yes
 zstyle ':omz:plugins:nvm' autoload yes
 
 # Load Oh My Zsh
-if [ -f $ZSH/oh-my-zsh.sh ]; then
-	source $ZSH/oh-my-zsh.sh
+if [ -f ${ZSH}/oh-my-zsh.sh ]; then
+	source ${ZSH}/oh-my-zsh.sh
 fi
 
 # Starship prompt
