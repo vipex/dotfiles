@@ -10,10 +10,10 @@ cd "$(dirname "$0")" || exit 1
 DOT_ROOT=$(pwd -P)
 set -e
 
-log_i() { echo -e "\033[0;34mℹ️ $1\033[0m"; } # Blue
-log_o() { echo -e "\033[0;32m✅ $1\033[0m"; } # Green
-log_w() { echo -e "\033[0;33m⚠️ $1\033[0m"; } # Yellow
-log_e() { echo -e "\033[0;31m❌ $1\033[0m"; } # Red
+log_i() { echo -e "\033[0;34mℹ️\t$1\033[0m"; } # Blue
+log_o() { echo -e "\033[0;32m✅\t$1\033[0m"; } # Green
+log_w() { echo -e "\033[0;33m⚠️\t$1\033[0m"; } # Yellow
+log_e() { echo -e "\033[0;31m❌\t$1\033[0m"; } # Red
 OS=$(uname -s)
 
 # Get the OS type
@@ -39,9 +39,11 @@ fi
 log_i "Setting up dotfiles with GNU Stow..."
 DOT_STOW_SOURCE=${DOT_STOW_SOURCE:-"${DOT_ROOT}/dots"}
 DOT_STOW_TARGET=${DOT_STOW_TARGET:-"${HOME}"}
-if [ -d "${DOT_STOW_SOURCE}" ]; then
+if [ -d "${DOT_STOW_SOURCE}" ] && [ -d "${DOT_STOW_TARGET}" ]; then
   log_i "Configuring dotfiles with stow..."
-  stow --dir="${DOT_STOW_SOURCE}" --target="${DOT_STOW_TARGET}"
+  cd "${DOT_STOW_SOURCE}" || exit 1
+  stow --target="${DOT_STOW_TARGET}" .
+  cd "${DOT_ROOT}" || exit 1
   log_o "Dotfiles configured."
 else
   log_e "Dotfiles directory not found at ${DOT_STOW_SOURCE}"
