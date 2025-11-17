@@ -60,6 +60,31 @@ else
   fi
 fi
 
+## Load LaunchAgents
+DOT_LAUNCH_AGENTS=${DOT_LAUNCH_AGENTS:-"./macos/LaunchAgents/"}
+if [ -d "${DOT_LAUNCH_AGENTS}" ]; then
+  log_i "Loading LaunchAgents..."
+  mkdir -p "${HOME}/Library/LaunchAgents"
+  for agent in "${DOT_LAUNCH_AGENTS}"*.plist; do
+    if [ -f "${agent}" ]; then
+      # Link file to ~/Library/LaunchAgents
+      ln -sf "$(pwd -P)/${agent}" "${HOME}/Library/LaunchAgents/$(basename "${agent}")"
+      # check if the LaunchAgent is already loaded
+      if launchctl print gui/"$(id -u)"/"$(basename "${agent}")" &>/dev/null; then
+        # Unload the LaunchAgent first
+        launchctl bootout gui/"$(id -u)" "${HOME}/Library/LaunchAgents/$(basename "${agent}")" || \
+          log_w "Failed to unload existing LaunchAgent $(basename "${agent}")."
+      fi
+      # Load the LaunchAgent with launchctl bootstrap
+      launchctl bootstrap gui/"$(id -u)" "${HOME}/Library/LaunchAgents/$(basename "${agent}")" || \
+        log_w "LaunchAgent $(basename "${agent}") is already loaded."
+    fi
+  done
+  log_o "LaunchAgents loaded."
+else
+  log_w "LaunchAgents directory not found at ${DOT_LAUNCH_AGENTS}"
+fi
+
 ## macOS specific configurations (defaults)
 
 ## system configurations
