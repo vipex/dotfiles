@@ -9,18 +9,24 @@ ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 HIST_STAMPS="yyyy-mm-dd"
 
-zstyle ':omz:update' mode auto
-zstyle ':omz:update' frequency 7
-zstyle ':omz:update' verbosity default
-
 # Plugins
 # Standard plugins: $ZSH/plugins/
 # Custom plugins:   $ZSH_CUSTOM/plugins/
 plugins=(common-aliases cp git aws docker brew composer nvm)
 
-# Plugins config
-zstyle ':omz:plugins:nvm' lazy yes
-zstyle ':omz:plugins:nvm' autoload yes
+if command -v zstyle &> /dev/null; then
+  # Updates
+  zstyle ':omz:update' mode auto
+  zstyle ':omz:update' frequency 7
+  zstyle ':omz:update' verbosity default
+  # History config
+  zstyle ':omz:history' max-entries 10000
+  zstyle ':omz:history' save-interval 200
+  zstyle ':omz:history' share-history yes
+  # Plugins config
+  zstyle ':omz:plugins:nvm' lazy yes
+  zstyle ':omz:plugins:nvm' autoload yes
+fi
 
 # Load Oh My Zsh
 if [ -f ${ZSH}/oh-my-zsh.sh ]; then
