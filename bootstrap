@@ -50,15 +50,6 @@ else
   exit 1
 fi
 
-# Reload configurations
-if [ -f "${HOME}/.zshrc" ]; then
-  log_i "Reloading zsh configuration..."
-  source "${HOME}/.zshrc"
-  log_o "zsh configuration reloaded."
-else
-  log_w ".zshrc not found, skipping reload."
-fi
-
 # Install oh-my-zsh if not already installed
 if [ -z "${ZSH}" ] || [ ! -d "${ZSH}" ]; then
   log_i "Installing Oh My Zsh..."
