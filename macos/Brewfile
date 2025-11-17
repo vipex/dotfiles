@@ -14,15 +14,15 @@ brew "telnet"
 brew "rsync"
 brew "stow"
 
-#> Security
-brew "1password-cli"
-
 #> AWS Tools
 brew "awscli"
 brew "cfn-lint"
 
 
 ## CASKS
+
+#> Security
+cask "1password-cli"
 
 #> System Utilities
 cask "logi-options+"
