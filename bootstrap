@@ -63,7 +63,7 @@ fi
 # Install starship prompt if not already installed
 if ! command -v starship &> /dev/null; then
   log_i "Installing Starship prompt..."
-  curl -sS https://starship.rs/install.sh | sh -s -- --yes
+  curl -sS https://starship.rs/install.sh | sh -s -- --yes > /dev/null
   log_o "Starship prompt installed."
 else
   log_o "Starship prompt already installed."
