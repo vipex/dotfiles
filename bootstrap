@@ -51,6 +51,7 @@ else
 fi
 
 # Install oh-my-zsh if not already installed
+ZSH="${ZSH:-"${HOME}/.omz"}"
 if [ -z "${ZSH}" ] || [ ! -d "${ZSH}" ]; then
   log_i "Installing Oh My Zsh..."
   sh -c "$(curl -fsSL https://install.ohmyz.sh)" "" --unattended --keep-zshrc
