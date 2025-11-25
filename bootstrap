@@ -42,7 +42,7 @@ DOT_STOW_TARGET=${DOT_STOW_TARGET:-"${HOME}"}
 if [ -d "${DOT_STOW_SOURCE}" ] && [ -d "${DOT_STOW_TARGET}" ]; then
   log_i "Configuring dotfiles with stow..."
   cd "${DOT_STOW_SOURCE}" || exit 1
-  stow --target="${DOT_STOW_TARGET}" .
+  stow --dotfiles --target="${DOT_STOW_TARGET}" .
   cd "${DOT_ROOT}" || exit 1
   log_o "Dotfiles configured."
 else
