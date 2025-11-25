@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+# If DOT_ROOT is not set, the script is called directly so
+# set DOT_ROOT to the script's directory
+# and define logging functions as simple echo commands
+if [ -z "${DOT_ROOT}" ]; then
+  echo "Running stow-helper directly..."
+  cd "$(dirname "$0")" || exit 1
+  DOT_ROOT=$(pwd -P)
+  set -e
+
+  log_i() { echo -e "\033[0;34mℹ️\t$1\033[0m"; } # Blue
+  log_o() { echo -e "\033[0;32m✅\t$1\033[0m"; } # Green
+  log_w() { echo -e "\033[0;33m⚠️\t$1\033[0m"; } # Yellow
+  log_e() { echo -e "\033[0;31m❌\t$1\033[0m"; } # Red
+fi
+
+# Uses stow to manage dotfiles
+if ! command -v stow &> /dev/null; then
+  log_e "stow could not be found, please install it first."
+  exit 1
+fi
+
+log_i "Setting up dotfiles with GNU Stow..."
+DOT_STOW_SOURCE=${DOT_STOW_SOURCE:-"${DOT_ROOT}/dots"}
+DOT_STOW_TARGET=${DOT_STOW_TARGET:-"${HOME}"}
+OPTIONS=(--dotfiles --dir="${DOT_STOW_SOURCE}" --target="${DOT_STOW_TARGET}")
+
+case "${1}" in
+install)
+  log_i "Installing dotfiles..."
+  FLAGS=("${OPTIONS[@]}")
+  ;;
+update)
+  log_i "Updating dotfiles..."
+  FLAGS=(--restow "${OPTIONS[@]}")
+  ;;
+remove)
+  log_i "Removing dotfiles..."
+  FLAGS=(--delete "${OPTIONS[@]}")
+  ;;
+*)
+  log_e "Invalid argument. Use 'install', 'update' or 'remove'."
+  exit 1
+esac
+
+if [ -d "${DOT_STOW_SOURCE}" ] && [ -d "${DOT_STOW_TARGET}" ]; then
+  for package in "${DOT_STOW_SOURCE}"/*/; do
+    package_name=$(basename "${package}")
+    log_i "Processing package: ${package_name}"
+    stow "${FLAGS[@]}" "${package_name}"
+  done
+
+  log_o "Dotfiles configured."
+else
+  log_e "Dotfiles directory not found at ${DOT_STOW_SOURCE}"
+  exit 1
+fi

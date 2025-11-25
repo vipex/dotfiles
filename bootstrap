@@ -16,7 +16,7 @@ log_w() { echo -e "\033[0;33m⚠️\t$1\033[0m"; } # Yellow
 log_e() { echo -e "\033[0;31m❌\t$1\033[0m"; } # Red
 OS=$(uname -s)
 
-# Get the OS type
+# Specific OS setup
 case "${OS}" in
 Darwin)
   source macos/bootstrap
@@ -30,25 +30,8 @@ Linux)
   ;;
 esac
 
-# Uses stow to manage dotfiles
-if ! command -v stow &> /dev/null; then
-  echo "stow could not be found, please install it first."
-  exit 1
-fi
-
-log_i "Setting up dotfiles with GNU Stow..."
-DOT_STOW_SOURCE=${DOT_STOW_SOURCE:-"${DOT_ROOT}/dots"}
-DOT_STOW_TARGET=${DOT_STOW_TARGET:-"${HOME}"}
-if [ -d "${DOT_STOW_SOURCE}" ] && [ -d "${DOT_STOW_TARGET}" ]; then
-  log_i "Configuring dotfiles with stow..."
-  cd "${DOT_STOW_SOURCE}" || exit 1
-  stow --dotfiles --target="${DOT_STOW_TARGET}" .
-  cd "${DOT_ROOT}" || exit 1
-  log_o "Dotfiles configured."
-else
-  log_e "Dotfiles directory not found at ${DOT_STOW_SOURCE}"
-  exit 1
-fi
+# Setup dotfiles using stow-helper
+source stow-helper install
 
 # Install oh-my-zsh if not already installed
 ZSH="${ZSH:-"${HOME}/.omz"}"

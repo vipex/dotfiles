@@ -35,9 +35,11 @@ cd ~/.dotfiles && ./bootstrap
 
 Generic variables:
 - `DOT_HOSTNAME` - Hostname to change it system-wide.
+- `ZSH` - Oh My Zsh installation path (default `${HOME}/.omz`).
+
+Stow (stow-helper) specific variables:
 - `DOT_STOW_SOURCE` - Alternative source for dotfiles repository (default `./dots`).
 - `DOT_STOW_TARGET` - Alternative target directory for dotfiles (default `${HOME}`).
-- `ZSH` - Oh My Zsh installation path (default `${HOME}/.omz`).
 
 MacOS specific variables:
 - `BREWFILE` - Path to the Brewfile for Homebrew [bundle](https://docs.brew.sh/Brew-Bundle-and-Brewfile) installations.
