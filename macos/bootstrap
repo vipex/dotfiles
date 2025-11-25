@@ -86,5 +86,10 @@ else
 fi
 
 ## macOS specific configurations (defaults)
-
-## system configurations
+# TODO: Uncomment the following lines when macos/defaults is ready
+if [ -f "./macos/defaults" ]; then
+  log_w "Macos defaults still not finished, skipping..."
+  #source ./macos/defaults
+else
+  log_w "macos/defaults script not found, skipping macOS system settings."
+fi
