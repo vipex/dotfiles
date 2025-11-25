@@ -1,21 +1,16 @@
 # ~/.dotfiles
 
 This repository contains my personal dotfiles and configuration files for various applications and tools.
-Feel free to explore and use them as a reference for your own setup!
+Feel free to explore and use them as a reference for your own setup.
+
+More likely, give me feedbacks and suggestions to improve it.
 
 ## Manual Setup
 
 Here the links to some applications that's better install manually and are prerequisites for some configurations.
 
-- [1Password](https://1password.com/downloads/)
-- [Bitdefender](https://central.bitdefender.com/)
-
-## Content
-
-- `bootstrap` - The main setup script to initialize the dotfiles and configurations.
-- `home/` - Contains the actual dotfiles and configuration files to be symlinked to the home directory.
-- `macos/` - MacOS specific configurations and installation scripts.
--
+- Password manager: [1Password](https://1password.com/downloads/)
+- Antimalware software: [Bitdefender](https://central.bitdefender.com/)
 
 ## Setup Instructions
 
@@ -47,4 +42,13 @@ MacOS specific variables:
 
 ## Contents
 
-> TBD
+- `bootstrap` - Where the magic happens, a.k.a. main setup script.
+- `dots/` - Directory containing the actual dotfiles organized in subdirectories for each application.
+- `linux/` - Linux-specific setup scripts and configurations (not yet implemented).
+- `macos/` - MacOS-specific setup scripts and configurations.
+  - `bootstrap` - Again, MacOS-specific setup script.
+  - `defaults` - Script to apply MacOS system defaults.
+  - `LaunchAgents/` - Directory containing plist files to be setup at startup, will be symlinked to `~/Library/LaunchAgents/`.
+  - `Brewfile` - Homebrew bundle file for installing packages and applications.
+  - `Masfile` - List of Mac App Store applications to be installed via `mas` (not yet implemented).
+- `stow-helper` - Helper script to manage dotfiles using GNU Stow.
