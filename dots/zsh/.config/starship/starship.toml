@@ -1,3 +1,69 @@
 # Starship Configuration File
 
+"$schema" = 'https://starship.rs/config-schema.json'
+
 add_newline = false
+
+palette = "github_dark_default"
+
+format = """
+[](bg:surface fg:bg)$directory$git_branch$git_status$nodejs$rust$python[](bg:none fg:surface) $time
+$character"""
+
+[palettes.github_dark_default]
+bg = "#0d1117"
+surface = "#161b22"
+fg = "#c9d1d9"
+blue = "#58a6ff"
+green = "#3fb950"
+orange = "#d29922"
+pink = "#f778ba"
+red = "#ff7b72"
+
+[directory]
+style = "bg:surface fg:blue"
+read_only = " "
+truncate_to_repo = true
+truncation_length = 3
+format = "[ $path ]($style)"
+
+[git_branch]
+style = "bg:surface fg:fg"
+symbol = " "
+truncation_length = 20
+format = "[ $symbol$branch ]($style)"
+
+[git_status]
+style = "bg:surface fg:orange"
+format = "[ $all_status$ahead_behind ]($style)"
+
+[nodejs]
+style = "bg:surface fg:green"
+symbol = " "
+format = "[ $symbol($version) ]($style)"
+
+[php]
+style = "bg:surface fg:blue"
+symbol = " "
+format = "[ $symbol($version) ]($style)"
+
+[rust]
+style = "bg:surface fg:orange"
+symbol = " "
+format = "[ $symbol($version) ]($style)"
+
+[python]
+style = "bg:surface fg:pink"
+symbol = " "
+format = "[ $symbol($version) ]($style)"
+
+[time]
+disabled = false
+time_format = "%H:%M"
+style = "fg:fg"
+format = "[$time]($style)"
+
+[character]
+success_symbol = "[❯](fg:green)"
+error_symbol = "[❯](fg:red)"
+vicmd_symbol = "[❮](fg:blue)"
