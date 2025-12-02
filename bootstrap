@@ -56,8 +56,10 @@ fi
 export NVM_DIR="${NVM:-"${HOME}/.nvm"}"
 if [ ! -d "${NVM_DIR}" ]; then
   log_i "Installing NVM (Node Version Manager)..."
+  # get latest nvm version from github api
   VERSION=$(curl -s "https://api.github.com/repos/nvm-sh/nvm/releases/latest"| grep tag_name | cut -d '"' -f 4)
-  curl -o- "https://raw.githubusercontent.com/nvm-sh/nvm/${VERSION}/install.sh" | bash
+  # Install skipping profile modification
+  PROFILE=/dev/null curl -o- "https://raw.githubusercontent.com/nvm-sh/nvm/${VERSION}/install.sh" | bash
   log_o "NVM installed."
 else
   log_o "NVM already installed."
