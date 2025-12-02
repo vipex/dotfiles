@@ -1,6 +1,8 @@
-# OMZ Configuration
+# Main environment variables
 export ZSH="${HOME}/.omz"
+export NVM="${HOME}/.nvm"
 
+# OMZ Configuration
 ZSH_THEME=""
 ZSH_CUSTOM="${HOME}/.omc"
 ZSH_COMPDUMP="${ZSH_CACHE_DIR}/.zcompdump"
@@ -36,4 +38,11 @@ fi
 # Starship prompt
 if command -v starship &> /dev/null; then
 	eval "$(starship init zsh)"
+fi
+
+# Load NVM
+if [ -d "${NVM}" ]; then
+  export NVM_DIR="${NVM}"
+  [ -s "${NVM_DIR}/nvm.sh" ] && \. "${NVM_DIR}/nvm.sh"
+  [ -s "${NVM_DIR}/bash_completion" ] && \. "${NVM_DIR}/bash_completion"
 fi

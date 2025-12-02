@@ -31,6 +31,7 @@ cd ~/.dotfiles && ./bootstrap
 Generic variables:
 - `DOT_HOSTNAME` - Hostname to change it system-wide.
 - `ZSH` - Oh My Zsh installation path (default `${HOME}/.omz`).
+- `NVM` - Node Version Manager installation path (default `${HOME}/.nvm`).
 
 Stow (stow-helper) specific variables:
 - `DOT_STOW_SOURCE` - Alternative source for dotfiles repository (default `./dots`).

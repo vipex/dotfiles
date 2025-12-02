@@ -7,7 +7,7 @@
 # -------------------------------------------------------------------------
 
 cd "$(dirname "$0")" || exit 1
-DOT_ROOT=$(pwd -P)
+export DOT_ROOT=$(pwd -P)
 set -e
 
 log_i() { echo -e "\033[0;34mℹ️\t$1\033[0m"; } # Blue
@@ -50,6 +50,33 @@ if ! command -v starship &> /dev/null; then
   log_o "Starship prompt installed."
 else
   log_o "Starship prompt already installed."
+fi
+
+# Install nvm if not already installed
+export NVM_DIR="${NVM:-"${HOME}/.nvm"}"
+if [ ! -d "${NVM_DIR}" ]; then
+  log_i "Installing NVM (Node Version Manager)..."
+  VERSION=$(curl -s "https://api.github.com/repos/nvm-sh/nvm/releases/latest"| grep tag_name | cut -d '"' -f 4)
+  curl -o- "https://raw.githubusercontent.com/nvm-sh/nvm/${VERSION}/install.sh" | bash
+  log_o "NVM installed."
+else
+  log_o "NVM already installed."
+fi
+
+# Install node LTS with latest npm and set as default
+# Install pnpm via corepack
+if [ -s "${NVM_DIR}/nvm.sh" ]; then
+  \. "${NVM_DIR}/nvm.sh"
+  nvm install --lts --latest-npm
+  nvm use --lts
+  nvm alias default 'lts/*'
+  corepack enable
+  corepack prepare pnpm@latest --activate
+
+  # Verify installations
+  log_i "Installed Node lts version: $(node -v)"
+  log_i "Installed npm version: $(npm -v)"
+  log_i "Installed pnpm version: $(pnpm -v)"
 fi
 
 log_i "Bootstrap process completed."
