@@ -37,7 +37,7 @@ else
 fi
 
 ### Install dependencies via Homebrew
-BREWFILE=${BREWFILE:-"macos/Brewfile"}
+BREWFILE=${BREWFILE:-"${DOT_ROOT}/macos/Brewfile"}
 if [ -f "${BREWFILE}" ]; then
   log_i "Installing packages via Homebrew..."
   brew bundle --file="${BREWFILE}"
@@ -47,7 +47,7 @@ else
 fi
 
 ## Mas-cli
-MASFILE=${MASFILE:-"./macos/Masfile"}
+MASFILE=${MASFILE:-"${DOT_ROOT}/macos/Masfile"}
 if ! command -v mas &>/dev/null; then
   log_w "mas-cli not installed, skipping App Store apps installation."
 else
@@ -61,22 +61,29 @@ else
 fi
 
 ## Load LaunchAgents
-DOT_LAUNCH_AGENTS=${DOT_LAUNCH_AGENTS:-"macos/LaunchAgents/"}
+DOT_LAUNCH_AGENTS=${DOT_LAUNCH_AGENTS:-"${DOT_ROOT}/macos/LaunchAgents/"}
 if [ -d "${DOT_LAUNCH_AGENTS}" ]; then
   log_i "Loading LaunchAgents..."
-  mkdir -p "${HOME}/Library/LaunchAgents"
+
+  LA_PATH="${HOME}/Library/LaunchAgents"
+  if [ ! -d "${LA_PATH}" ]; then
+    mkdir -p "${LA_PATH}" || \
+      log_e "Failed to create LaunchAgents directory at ${LA_PATH}." && exit 1
+  fi
   for agent in "${DOT_LAUNCH_AGENTS}"*.plist; do
     if [ -f "${agent}" ]; then
+      FILENAME=$(basename "${agent}")
+      # Filename without extension
+      SERVICE="${FILE%.*}"
       # Link file to ~/Library/LaunchAgents
-      ln -sf "$(pwd -P)/${agent}" "${HOME}/Library/LaunchAgents/$(basename "${agent}")"
+      ln -sf "${DOT_LAUNCH_AGENTS}/${FILENAME}" "${HOME}/Library/LaunchAgents/${FILENAME}"
       # check if the LaunchAgent is already loaded
-      if launchctl print gui/"$(id -u)"/"$(basename "${agent}")" &>/dev/null; then
-        # Unload the LaunchAgent first
-        launchctl bootout gui/"$(id -u)" "${HOME}/Library/LaunchAgents/$(basename "${agent}")" || \
-          log_w "Failed to unload existing LaunchAgent $(basename "${agent}")."
+      if launchctl print "gui/$(id -u)/${SERVICE}" &>/dev/null; then
+        log_w "LaunchAgent ${FILENAME} is already loaded, skipping."
+        continue
       fi
       # Load the LaunchAgent with launchctl bootstrap
-      launchctl bootstrap gui/"$(id -u)" "${HOME}/Library/LaunchAgents/$(basename "${agent}")" || \
+      launchctl bootstrap "gui/$(id -u)" "${HOME}/Library/LaunchAgents/$(basename "${agent}")" || \
         log_w "LaunchAgent $(basename "${agent}") is already loaded."
     fi
   done
