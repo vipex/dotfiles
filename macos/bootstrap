@@ -37,7 +37,7 @@ else
 fi
 
 ### Install dependencies via Homebrew
-BREWFILE=${BREWFILE:-"./macos/Brewfile"}
+BREWFILE=${BREWFILE:-"macos/Brewfile"}
 if [ -f "${BREWFILE}" ]; then
   log_i "Installing packages via Homebrew..."
   brew bundle --file="${BREWFILE}"
@@ -61,7 +61,7 @@ else
 fi
 
 ## Load LaunchAgents
-DOT_LAUNCH_AGENTS=${DOT_LAUNCH_AGENTS:-"./macos/LaunchAgents/"}
+DOT_LAUNCH_AGENTS=${DOT_LAUNCH_AGENTS:-"macos/LaunchAgents/"}
 if [ -d "${DOT_LAUNCH_AGENTS}" ]; then
   log_i "Loading LaunchAgents..."
   mkdir -p "${HOME}/Library/LaunchAgents"
