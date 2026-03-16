@@ -26,3 +26,22 @@ function x() {
     echo "No runner (${runner}) found in current or parent directories."
   fi
 }
+
+# Update & Upgrade utilities
+alias nodu="nvm install --lts --latest-npm"
+function bruu() {
+  titlez "Brew: doctor, missing, update & upgrade brews and casks and cleanup"
+
+  # Brew diagnostic
+  brew doctor
+  brew missing
+
+  # Brew update & upgrade
+  brew update
+  brew upgrade
+  brew upgrade --cask
+
+  # Brew cleanup
+  brew cleanup -s
+}
+
