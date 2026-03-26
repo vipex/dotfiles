@@ -9,10 +9,13 @@
 #> Generic
 brew "htop"
 brew "btop"
+brew "ncdu"
 brew "git"
 brew "telnet"
 brew "rsync"
 brew "stow"
+brew "lnav"
+brew "fastfetch"
 
 #> Development
 brew "mysql-client"
