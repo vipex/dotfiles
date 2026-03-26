@@ -30,7 +30,7 @@ function x() {
 # Update & Upgrade utilities
 alias nodu="nvm install --lts --latest-npm"
 function bruu() {
-  titlez "Brew: doctor, missing, update & upgrade brews and casks and cleanup"
+  echo "Brew: doctor, missing, update & upgrade brews and casks and cleanup"
 
   # Brew diagnostic
   brew doctor
