@@ -22,6 +22,7 @@ brew "mysql-client"
 
 #> AWS Tools
 brew "awscli"
+brew "aws-sam-cli"
 brew "cfn-lint"
 
 
@@ -55,7 +56,6 @@ cask "keepassxc"
 cask "keka"
 cask "numi"
 cask "obsidian"
-cask "raycast"
 cask "stats"
 
 #> Security
@@ -68,12 +68,12 @@ cask "taskexplorer"
 
 #> Development
 cask "dbeaver-community"
-cask "mysqlworkbench"
 cask "mysql-shell"
 cask "docker-desktop"
 cask "phpstorm"
 cask "postman"
 cask "redis-insight"
+cask "antigravity"
 cask "sublime-text"
 cask "visual-studio-code"
 
@@ -86,5 +86,6 @@ cask "google-drive"
 cask "signal"
 cask "whatsapp"
 cask "spotify"
+cask "rustdesk"
 cask "teamviewer"
 cask "windows-app"
