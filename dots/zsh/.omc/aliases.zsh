@@ -38,7 +38,7 @@ function bruu() {
 
   # Brew update & upgrade
   brew update
-  brew upgrade
+  brew upgrade --formula
   brew upgrade --cask
 
   # Brew cleanup
